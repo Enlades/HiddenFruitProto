@@ -7,7 +7,9 @@ public abstract class Controller : MonoBehaviour
 {
     public Action<GameState> GameStateChangeEvent;
 
-    public abstract void SetGameState(GameState p_gameState);
+    public virtual void SetGameState(GameState p_gameState){
+        this.GameState = p_gameState;
+    }
 
     protected GameState GameState{get; set;}
 }

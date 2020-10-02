@@ -29,6 +29,12 @@ public class GameManager : MonoBehaviour
         GameState = p_newGameState;
 
         UpdateControllersGameState(p_newGameState);
+
+        if(p_newGameState == GameState.PuzzleComplete){
+            GameState = GameState.WaitingStencil;
+
+            UpdateControllersGameState(GameState);
+        }
     }
 
     private void UpdateControllersGameState(GameState p_newGameState){

@@ -1,10 +1,19 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class PuzzlePiece : MonoBehaviour
 {
+    public Action PieceComplete;
+
     public bool CanSelect{get; private set;}
+
+    public Vector3 CenterOffset{ 
+        get{
+            return _rb.worldCenterOfMass - transform.position;
+        }
+    }
 
     private Rigidbody _rb;
     private Collider _collider;
@@ -29,22 +38,29 @@ public class PuzzlePiece : MonoBehaviour
     }
 
     public void DeSelect(){
-        StartCoroutine(SmootMove(_startingPosition));
+        StartCoroutine(SmoothMove(_startingPosition));
     }
 
     public void Place(){
-        StartCoroutine(SmootMove(transform.parent.position));
+        StartCoroutine(SmoothMove(transform.parent.position
+        , ()=>{CanSelect = false; PieceComplete?.Invoke();}));
     }
 
-    private IEnumerator SmootMove(Vector3 p_targetPosition){
-        float maxDuration = 1f;
+    private IEnumerator SmoothMove(Vector3 p_targetPosition){
+        yield return SmoothMove(p_targetPosition, null);
+    }
+
+    private IEnumerator SmoothMove(Vector3 p_targetPosition, Action p_Action)
+    {
+        float maxDuration = 0.5f;
         float duration = maxDuration;
 
         Vector3 startPosition = transform.position;
 
         CanSelect = false;
 
-        while(duration > 0f){
+        while (duration > 0f)
+        {
             transform.position = Vector3.Lerp(startPosition, p_targetPosition
             , (maxDuration - duration) / maxDuration);
 
@@ -56,5 +72,7 @@ public class PuzzlePiece : MonoBehaviour
         transform.position = p_targetPosition;
 
         CanSelect = true;
+
+        p_Action?.Invoke();
     }
 }

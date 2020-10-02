@@ -4,19 +4,29 @@ using UnityEngine;
 
 public class MouseInputLayer : IInputLayer
 {
-    public bool GettingInput{
+    public bool Input{
         get{
-            return Input.GetMouseButton(0);
+            return UnityEngine.Input.GetMouseButton(0);
         }
     }
 
-    public bool FirstInput{
+    public bool InputDown{
         get{
-            return Input.GetMouseButtonDown(0);
+            return UnityEngine.Input.GetMouseButtonDown(0);
         }
     }
 
-    public Vector3 InputPosition(){
-        return Input.mousePosition;
+    public bool InputUp
+    {
+        get
+        {
+            return UnityEngine.Input.GetMouseButtonUp(0);
+        }
+    }
+
+    public Vector3 InputPosition{
+        get{
+            return UnityEngine.Input.mousePosition;
+        }
     }
 }
