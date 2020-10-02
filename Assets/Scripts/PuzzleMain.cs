@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Puzzle : MonoBehaviour
+public class PuzzleMain : MonoBehaviour
 {
     public GameObject PuzzleBorder;
 
@@ -44,5 +44,6 @@ public class Puzzle : MonoBehaviour
         PuzzleBorder.GetComponent<Collider>().isTrigger = true;
 
         PuzzleBorder.transform.rotation = Quaternion.LookRotation(Vector3.forward, Vector3.up);
+        PuzzleBorder.transform.localPosition = Vector3.zero;
     }
 }

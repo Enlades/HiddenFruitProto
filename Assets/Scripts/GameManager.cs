@@ -11,13 +11,12 @@ public class GameManager : MonoBehaviour
     private void Awake(){
         IInputLayer inputLayerInstance = new MouseInputLayer();
 
-        foreach (IInputReceiver ir in Controllers){
-            ir.InputLayer = inputLayerInstance;
-        }
-
         foreach (Controller c in Controllers)
         {
-            c.GameStateChangeEvent += GameStateChangeRequest;
+            c.GameStateChange += GameStateChangeRequest;
+            c.SprayColorChange += SprayColorChanged;
+            c.StencilChange += StencilChange;
+            c.SetInputLayer(inputLayerInstance);
         }
     }
 
@@ -39,7 +38,22 @@ public class GameManager : MonoBehaviour
 
     private void UpdateControllersGameState(GameState p_newGameState){
         foreach(Controller c in Controllers){
-            c.SetGameState(p_newGameState);
+            c.OnGameStateChange(p_newGameState);
+        }
+    }
+
+    private void SprayColorChanged(Color p_sprayColor){
+        foreach (Controller c in Controllers)
+        {
+            c.OnSprayColorChange(p_sprayColor);
+        }
+    }
+
+    private void StencilChange()
+    {
+        foreach (Controller c in Controllers)
+        {
+            c.OnStencilChange();
         }
     }
 }

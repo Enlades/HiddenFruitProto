@@ -13,8 +13,11 @@ public class UIController : Controller, IInputReceiver
     public GameObject BrushColorsPanel;
     public GameObject NextButton;
     public GameObject DoneButton;
+    public GameObject[] StencilBGs;
 
     public Button[] BrushColorButtons;
+
+    private int _stencilIndex;
 
     private void Awake(){
         for (int i = 0; i < BrushColorButtons.Length; i++)
@@ -25,17 +28,19 @@ public class UIController : Controller, IInputReceiver
                 BrushSelected(indexer);
             });
         }
+
+        _stencilIndex = 0;
     }
 
     private void Update(){
         if(this.GameState == GameState.Ready && InputLayer.Input){
-            GameStateChangeEvent?.Invoke(GameState.Puzzle);
+            GameStateChange?.Invoke(GameState.Puzzle);
         }
     }
 
-    public override void SetGameState(GameState p_gameState)
+    public override void OnGameStateChange(GameState p_gameState)
     {
-        base.SetGameState(p_gameState);
+        base.OnGameStateChange(p_gameState);
 
         if(this.GameState == GameState.Puzzle){
             HoldAndRelease.SetActive(false);
@@ -46,10 +51,40 @@ public class UIController : Controller, IInputReceiver
             BrushColorsPanel.SetActive(true);
             StencilPanel.SetActive(true);
             NextButton.SetActive(true);
+
+            StencilBGs[_stencilIndex].SetActive(true);
         }
     }
 
-    private void BrushSelected(int p_index){
+    public override void SetInputLayer(IInputLayer p_inputLayer){
+        this.InputLayer = p_inputLayer;
+    }
 
+    public void BrushSelected(int p_index){
+        Color selectedColor = BrushColorButtons[p_index].image.color;
+
+        foreach(Button b in BrushColorButtons){
+            b.GetComponent<BrushButton>().DisableBG();
+        }
+
+        BrushColorButtons[p_index].GetComponent<BrushButton>().EnableBG();
+
+        SprayColorChange?.Invoke(selectedColor);
+
+        if(this.GameState == GameState.WaitingStencil){
+            GameStateChange?.Invoke(GameState.Stencil);
+        }
+    }
+
+    public void OnNextButton(){
+        if(_stencilIndex == 2){
+            return;
+        }
+
+        StencilChange?.Invoke();
+        
+        _stencilIndex++;
+
+        StencilBGs[_stencilIndex].SetActive(true);
     }
 }

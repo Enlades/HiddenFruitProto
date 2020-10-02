@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class MouseInputLayer : IInputLayer
 {
@@ -21,6 +22,12 @@ public class MouseInputLayer : IInputLayer
         get
         {
             return UnityEngine.Input.GetMouseButtonUp(0);
+        }
+    }
+
+    public bool IsOverUI{
+        get{
+            return EventSystem.current.IsPointerOverGameObject();
         }
     }
 

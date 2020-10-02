@@ -15,7 +15,7 @@ TagManager:
   - 
   - 
   - PuzzlePiece
-  - 
+  - PuzzleStencil
   - 
   - 
   - 
@@ -41,4 +41,10 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: PuzzleStencil
+    uniqueID: 1143242387
+    locked: 0
+  - name: SprayParticle
+    uniqueID: 2202744831
     locked: 0

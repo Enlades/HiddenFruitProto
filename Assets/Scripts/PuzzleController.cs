@@ -6,7 +6,7 @@ public class PuzzleController : Controller, IInputReceiver
 {
     public IInputLayer InputLayer { get; set; }
 
-    public Puzzle Puzzle;
+    public PuzzleMain Puzzle;
 
     private PuzzlePiece _selectedPiece;
 
@@ -26,15 +26,20 @@ public class PuzzleController : Controller, IInputReceiver
         PuzzleMainLoop();
     }
 
-    public override void SetGameState(GameState p_gameState)
+    public override void OnGameStateChange(GameState p_gameState)
     {
-        base.SetGameState(p_gameState);
+        base.OnGameStateChange(p_gameState);
 
         PuzzleMainLoop();
     }
 
+    public override void SetInputLayer(IInputLayer p_inputLayer)
+    {
+        this.InputLayer = p_inputLayer;
+    }
+
     private void PuzzleComplete(){
-        GameStateChangeEvent?.Invoke(GameState.PuzzleComplete);
+        GameStateChange?.Invoke(GameState.PuzzleComplete);
     }
 
     private void PuzzleMainLoop(){
@@ -45,7 +50,11 @@ public class PuzzleController : Controller, IInputReceiver
 
             if(Physics.Raycast(ray, out hit, float.MaxValue, LayerMask.GetMask("PuzzlePiece"))){
                 _selectedPiece = hit.collider.GetComponent<PuzzlePiece>();
-                _selectedPiece.Select();
+                if(_selectedPiece.CanSelect){
+                    _selectedPiece.Select();
+                }else{
+                    _selectedPiece = null;
+                }
             }
         }
 
