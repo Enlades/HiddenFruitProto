@@ -85,6 +85,13 @@ public class PuzzleStencilController : Controller, IInputReceiver
     public override void OnStencilChange(){
         _stencilIndex++;
 
+        if(_stencilIndex == 3){
+
+            StartCoroutine(SmoothStencilMove(PuzzleStencil.transform.position + Vector3.right * 10f, 0.2f
+            , null));
+            return;
+        }
+
         StartCoroutine(SmoothStencilMove(PuzzleStencil.transform.position + Vector3.right * 10f, 0.2f
         , () =>{ChangeStencil(); }));
     }

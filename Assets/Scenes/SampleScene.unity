@@ -687,8 +687,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   StencilPanel: {fileID: 153690598}
   EndLevelPanel: {fileID: 1164689494}
-  HoldAndRelease: {fileID: 675164124}
   BrushColorsPanel: {fileID: 1863485477}
+  HoldAndRelease: {fileID: 675164124}
   NextButton: {fileID: 397561082}
   DoneButton: {fileID: 2062723570}
   StencilBGs:
@@ -1795,6 +1795,16 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4824469541181619379, guid: 9ef6783c97a265e46ac2635821d3e34d,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 701499606}
+    - target: {fileID: 4824469541181619379, guid: 9ef6783c97a265e46ac2635821d3e34d,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnDoneButton
+      objectReference: {fileID: 0}
     - target: {fileID: 4824469541234772418, guid: 9ef6783c97a265e46ac2635821d3e34d,
         type: 3}
       propertyPath: m_IsActive
@@ -1880,6 +1890,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4824469541764419012, guid: 9ef6783c97a265e46ac2635821d3e34d,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 701499606}
+    - target: {fileID: 4824469541764419012, guid: 9ef6783c97a265e46ac2635821d3e34d,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnOkButton
       objectReference: {fileID: 0}
     - target: {fileID: 4824469541906897712, guid: 9ef6783c97a265e46ac2635821d3e34d,
         type: 3}

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class UIController : Controller, IInputReceiver
 {
@@ -9,8 +10,8 @@ public class UIController : Controller, IInputReceiver
 
     public GameObject StencilPanel;
     public GameObject EndLevelPanel;
-    public GameObject HoldAndRelease;
     public GameObject BrushColorsPanel;
+    public GameObject HoldAndRelease;
     public GameObject NextButton;
     public GameObject DoneButton;
     public GameObject[] StencilBGs;
@@ -86,5 +87,23 @@ public class UIController : Controller, IInputReceiver
         _stencilIndex++;
 
         StencilBGs[_stencilIndex].SetActive(true);
+
+        if(_stencilIndex == 2){
+            NextButton.SetActive(false);
+            DoneButton.SetActive(true);
+        }
+    }
+
+    public void OnDoneButton(){
+        StencilPanel.SetActive(false);
+        BrushColorsPanel.SetActive(false);
+        EndLevelPanel.SetActive(true);
+        DoneButton.SetActive(false);
+
+        StencilChange?.Invoke();
+    }
+
+    public void OnOkButton(){
+        SceneManager.LoadScene(0);
     }
 }
